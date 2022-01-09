@@ -1,0 +1,54 @@
+class Solution {
+    public boolean isRobotBounded(String instructions) {
+        int[] graph = new int[2];
+        graph[0] = 0;
+        graph[1] = 0;
+        int i = 1, j = 1;
+        boolean con = false;
+        int loop = 4;
+        while(loop != 0) {
+        for(int ii = 0 ; ii < instructions.length() ; ii++) {
+            char c = instructions.charAt(ii);
+            if(c == 'L') {
+                if(i == 1 && j == 1) {
+                    i = 0;
+                    j = 0;
+                } else if(i == 0 && j == 0) {
+                    i = 1;
+                    j = 0;
+                } else if(i == 1 && j == 0) {
+                    i = 0;
+                    j = 1;
+                } else if(i == 0 && j == 1) {
+                    i = 1;
+                    j = 1;
+                }
+            } else if(c == 'R') {
+                if(i == 1 && j == 1) {
+                    i = 0;
+                    j = 1;
+                } else if(i == 0 && j == 1) {
+                    i = 1;
+                    j = 0;
+                } else if(i == 1 && j == 0) {
+                    i = 0;
+                    j = 0;
+                } else if(i == 0 && j == 0) {
+                    i = 1;
+                    j = 1;
+                }
+            } else if(c == 'G') {
+                if(j == 0) {
+                    graph[i]--;
+                } else if(j == 1) {
+                    graph[i]++;
+                }
+            }
+        }
+        loop--;}
+        if(graph[0] == 0 && graph[1] == 0) {
+            return true;
+        } 
+        return false;
+    }
+}
