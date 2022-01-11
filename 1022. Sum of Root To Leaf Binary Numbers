@@ -1,0 +1,19 @@
+class Solution {
+    List<Integer> arr = new ArrayList<>();
+    void preOrderTraversal(TreeNode root, int sum) {
+        if(root != null) {
+            sum = (2*sum) + root.val;
+            if(root.left == null && root.right == null) {
+                arr.add(sum);
+            } 
+            preOrderTraversal(root.left, sum);
+            preOrderTraversal(root.right, sum);
+        } 
+    }
+    public int sumRootToLeaf(TreeNode root) {
+        int sum = 0;
+        preOrderTraversal(root, sum);
+        for(int i : arr) sum += i;
+        return sum;
+    }
+}
