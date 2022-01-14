@@ -1,0 +1,46 @@
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for(int i = 0 ; i < nums.length ; i++) {
+            map.put(i, nums[i]);
+        }
+        Arrays.sort(nums);
+        List<Integer> arr = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        boolean con = false;
+        for(int i = 0 ; i < nums.length ; i++) {
+            int a = nums[i];
+            int b = target - a;
+            int l = 0;
+            int h = nums.length-1;
+            while(l <= h) {
+                int mid = (l+h)/2;
+                if(b < nums[mid]) h = mid - 1;
+                else if(b > nums[mid]) l = mid + 1;
+                if(b == nums[mid]) {
+                    set.add(a);
+                    set.add(b);
+                    con = true;
+                    break;
+                }
+            }
+            if(con) break;
+        }
+        int c = 0 ;
+        Iterator it = map.entrySet().iterator();
+        while(it.hasNext()) {
+            if(c == 2) break;
+            Map.Entry pair = (Map.Entry)it.next();
+            int s = (int)pair.getValue();
+            if(set.contains(s)) {
+                arr.add((int)pair.getKey());
+                it.remove();
+                if(set.size() != 1) {
+                    set.remove(s);    
+                }
+                c++;
+            }
+        }
+        return new int[]{arr.get(0), arr.get(1)};
+    }
+}
