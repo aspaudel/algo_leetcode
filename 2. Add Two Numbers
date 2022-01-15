@@ -1,0 +1,77 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        String n1 = "", n2 = "";
+        ListNode l3;
+        while(l1 != null) {
+            n1 += l1.val;
+            l1 = l1.next;
+        }
+        while(l2 != null) {
+            n2 += l2.val;
+            l2 = l2.next;
+        }
+        String n11 = "", n22 = "";
+        for(int i = n1.length()-1 ; i >= 0 ; i--) {
+            n11 += n1.charAt(i);    
+        }
+        for(int i = n2.length()-1 ; i >= 0 ; i--) {
+            n22 += n2.charAt(i);    
+        }
+        String sum = "";
+        String min_s = "";
+        String max_s = "";
+        int min_length = n11.length() > n22.length() ? n22.length() : n11.length();
+        int max_length = n11.length() < n22.length() ? n22.length() : n11.length();
+        if(min_length == n11.length()) {
+            min_s = n11;
+            max_s = n22;
+        } else {
+            min_s = n22;
+            max_s = n11;
+        }
+        int c = 0;
+        int j = 0;
+        for(int i = max_length-1 ; i >= max_length-min_length ; i--) {
+            int s = Character.getNumericValue(min_s.charAt(min_length-j-1)) + Character.getNumericValue(max_s.charAt(i))+c;
+            j++;
+            if(s <= 9) {
+                sum += s;
+                c = 0;
+            } else {
+                int r = s % 10;
+                sum += r;
+                c = 1;
+            }
+        }
+        for(int i = max_length-min_length-1 ; i >= 0 ; i--) {
+            int s = Character.getNumericValue(max_s.charAt(i))+c;
+            if(s <= 9) {
+                sum += s;
+                c = 0;
+            } else {
+                int r = s % 10;
+                sum += r;
+                c = 1;
+            }
+        }
+        if(c == 1) sum += 1;
+        String res = sum;
+        l3 = new ListNode(Character.getNumericValue(res.charAt(0)));
+        ListNode resL = l3;
+        for(int i = 1 ; i < res.length() ; i++) {
+            l3.next = new ListNode(Character.getNumericValue(res.charAt(i)));
+            l3 = l3.next;
+        }
+        return resL;
+    }
+}
