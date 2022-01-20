@@ -1,0 +1,95 @@
+class Solution {
+    public Node cloneGraph(Node node) {
+        if(node == null) return null;
+        //Look for the number of nodes
+        Set<Node> set = new LinkedHashSet<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        set.add(node);
+        while(!queue.isEmpty()) {
+            Node n = queue.poll();
+            List<Node> nodes = n.neighbors;
+            for(Node no : nodes) {
+                if(!set.contains(no)){
+                    set.add(no);
+                    queue.add(no);
+                }    
+            }
+        }
+        //Define arraylist for the number of nodes
+        int min = Integer.MAX_VALUE;
+        int max = 0;
+        for(Node n : set) {
+            if(n.val < min) min = n.val;
+            if(n.val > max) max = n.val;
+        }
+        //Copy the adjency list using given nodes
+        List<Node> track = new ArrayList<>();
+        List<List<Node>> copy = new ArrayList<>();
+        for(int i = 0 ; i <= max ; i++) {
+            copy.add(new ArrayList<>());
+        }
+        set.clear();
+        queue.clear();
+        queue.add(node);
+        set.add(node);
+        while(!queue.isEmpty()) {
+            Node n = queue.poll();
+            List<Node> nodes = n.neighbors;
+            copy.set(n.val, nodes);
+            for(Node no : nodes) {
+                if(!set.contains(no)){
+                    set.add(no);
+                    queue.add(no);
+                }    
+            }
+        }
+        //Make the copy of the graph
+        boolean con = true;
+        Node return_node = null;
+        int i = 1;
+        HashMap<Integer, Node> hm = new HashMap<>();
+        for(Node n : set) {
+            ArrayList<Node> new_nodes = new ArrayList<>();
+            for(Node nn : copy.get(n.val)) {
+                Node new_node = null;
+                if(hm.containsKey(nn.val)) {
+                    new_node = hm.get(nn.val);    
+                } else {
+                    new_node = new Node(nn.val);
+                    hm.put(nn.val, new_node);
+                }
+                new_nodes.add(new_node);
+            }
+            Node node_new = null;
+            if(hm.containsKey(n.val)) {
+                node_new = hm.get(n.val);
+                node_new.neighbors = new_nodes;
+            } else {
+                node_new = new Node(n.val, new_nodes);    
+                hm.put(n.val, node_new);
+            }
+            i++;
+            if(con) {
+                return_node = node_new;
+                con = false;
+            }
+        }
+        set.clear();
+        queue.clear();
+        queue.add(node);
+        set.add(node);
+        while(!queue.isEmpty()) {
+            Node n = queue.poll();
+            List<Node> nodes = n.neighbors;
+            copy.set(n.val, nodes);
+            for(Node no : nodes) {
+                if(!set.contains(no)){
+                    set.add(no);
+                    queue.add(no);
+                }    
+            }
+        }
+        return return_node;
+    }
+}
