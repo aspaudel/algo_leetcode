@@ -23,12 +23,12 @@ class Solution {
             if(n.val < min) min = n.val;
             if(n.val > max) max = n.val;
         }
-        //Copy the adjency list using given nodes
         List<Node> track = new ArrayList<>();
         List<List<Node>> copy = new ArrayList<>();
         for(int i = 0 ; i <= max ; i++) {
             copy.add(new ArrayList<>());
         }
+        //Copy the adjency list using given nodes
         set.clear();
         queue.clear();
         queue.add(node);
