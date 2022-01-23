@@ -1,0 +1,47 @@
+class Solution {
+    public List<Integer> sequentialDigits(int low, int high) {
+        LinkedHashSet<String> arr = new LinkedHashSet<>();
+        List<Integer> res = new ArrayList<>();
+        int high_2 = high;
+        if(high > 10000000) high_2 = 10000000;
+        int l = Integer.toString(low).length();
+        String len = "1"; 
+        for(int i = 0 ; i < l-1 ; i++) {
+            len += 0;
+        }
+        for(int i = low ; i <= high_2 ; i=i+Integer.parseInt(len)) {
+                String s = Integer.toString(i);
+                char c = s.charAt(0);
+                int a = Character.getNumericValue(c);
+                if(a+s.length()-1 < 10) {
+                    String temp = "";
+                    for(int j = a ; j <= a+s.length()-1 ; j++) {
+                        temp += j;
+                    }
+                    if(Integer.parseInt(temp) >= low && Integer.parseInt(temp) <= high_2) {
+                        arr.add(temp);    
+                    }
+                }
+            }
+        for(String s : arr) {
+            res.add(Integer.parseInt(s));
+        }
+        if(low <= 23456789) {
+            if(low <= 12345678) {
+                if(high >= 23456789) {
+                    res.add(12345678);
+                    res.add(23456789);
+                } else if(high >=12345678) {
+                    res.add(12345678);
+                }
+            }
+            else if(high >= 23456789) {
+                res.add(23456789);
+            }
+        }
+        if(low < 123456789 && high >=123456789) {
+            res.add(123456789);
+        }
+        return res;
+    }
+}
