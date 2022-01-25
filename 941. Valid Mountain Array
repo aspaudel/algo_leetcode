@@ -1,0 +1,21 @@
+class Solution {
+    public boolean validMountainArray(int[] arr) {
+        boolean con = false;
+        if(arr.length < 3) {
+            return false;
+        }
+        for(int i = 1 ; i < arr.length ; i++) {
+            if(arr[i] < arr[i-1]) {
+                if(i == 1) return false;
+                con = true;
+                continue;
+            } else if(!con && arr[i] > arr[i-1]) {
+                if(i == arr.length-1) return false;
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+}
