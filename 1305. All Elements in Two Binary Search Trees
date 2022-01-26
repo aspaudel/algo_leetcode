@@ -1,0 +1,19 @@
+class Solution {
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    void dfs(TreeNode root1) {
+        if(root1 != null) {
+            dfs(root1.left);
+            pq.add(root1.val);
+            dfs(root1.right);
+        }
+    }
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        List<Integer> res = new ArrayList<>();
+        dfs(root1);
+        dfs(root2);
+        while(!pq.isEmpty()) {
+            res.add(pq.poll());
+        }
+        return res;
+    }
+}
