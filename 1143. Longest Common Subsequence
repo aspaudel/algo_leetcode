@@ -10,6 +10,27 @@ class Solution {
                 }
             }
         }
+        //Time limit exeeds on including below part which is meant to fetch the subsequence
+        /*while(dp[i][j] != 0) {
+            if(dp[i][j] == dp[i-1][j-1] && dp[i-1][j-1] == dp[i][j-1] && dp[i][j-1] ==  dp[i-1][j]) {
+                j--;
+            } else if(dp[i-1][j-1] > dp[i][j] && dp[i-1][j-1] > dp[i-1][j] && dp[i-1][j-1] > dp[i][j-1]){
+                res += text1.charAt(i);
+                i--;
+                j--;
+            }
+            else if(dp[i][j-1] > dp[i][j] && dp[i][j-1] > dp[i-1][j-1] && dp[i][j-1] > dp[i-1][j]){
+       j--;             
+            }
+            else if(dp[i-1][j] > dp[i][j-1] && dp[i-1][j] > dp[i-1][j-1] && dp[i-1][j] > dp[i][j]){
+       i--;             
+            } 
+        }
+        String rr = "";
+        for(int ii = res.length()-1 ; ii >= 0 ; ii--) {
+            rr += res.charAt(ii);
+        }
+        System.out.println(rr);*/
         return dp[text1.length()][text2.length()];
     }
 }
