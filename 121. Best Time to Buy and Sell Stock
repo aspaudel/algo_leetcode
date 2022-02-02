@@ -1,0 +1,13 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        int global_min = Integer.MAX_VALUE;
+        int global_max_profit = 0;
+        int local_max_profit = 0;
+        for(int i = 0 ; i < prices.length ; i++) {
+            if(global_min > prices[i]) global_min = prices[i];
+            local_max_profit = prices[i] - global_min;
+            if(local_max_profit > global_max_profit) global_max_profit = local_max_profit;
+        }
+        return global_max_profit;
+    }
+}
