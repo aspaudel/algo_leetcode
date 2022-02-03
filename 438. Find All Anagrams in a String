@@ -1,0 +1,48 @@
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        if(s.length() < p.length()) return res;
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int i = 0 ; i < p.length() ; i++) {
+            map.put(p.charAt(i), map.getOrDefault(p.charAt(i), 0)+1);
+        }
+        HashMap<Character, Integer> pma = new HashMap<>();
+        for(Character c : map.keySet()) {
+            pma.put(c, map.get(c));
+        }
+        for(int i = 0 ; i < p.length() ; i++) {
+            if(pma.containsKey(s.charAt(i))) {
+                pma.put(s.charAt(i), pma.get(s.charAt(i))-1);
+            }
+        }
+        boolean con = true;
+        for(Character c : pma.keySet()) {
+            if(pma.get(c) != 0) {
+                con = false;
+                break;
+            }
+        }
+        if(con) {
+            res.add(0);
+        }
+        for(int i = p.length() ; i < s.length() ; i++) {
+            con = true;
+            if(pma.containsKey(s.charAt(i))) {
+                pma.put(s.charAt(i), pma.get(s.charAt(i))-1);
+            }
+            if(pma.containsKey(s.charAt(i-p.length()))) {
+                pma.put(s.charAt(i-p.length()), pma.get(s.charAt(i-p.length()))+1);
+            }
+            for(Character c : pma.keySet()) {
+                if(pma.get(c) != 0) {
+                    con = false;
+                    break;
+                }
+            }
+            if(con) {
+                res.add(i-p.length()+1);
+            }
+        }
+        return res;
+    }
+}
