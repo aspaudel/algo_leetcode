@@ -1,0 +1,22 @@
+class Solution {
+    public char findTheDifference(String s, String t) {
+        HashMap<Character, Integer> hm1 = new HashMap<>();
+        HashMap<Character, Integer> hm2 = new HashMap<>();
+        for(int i = 0 ; i < s.length() ; i++) {
+            hm1.put(s.charAt(i), hm1.getOrDefault(s.charAt(i), 0)+1);
+        }
+        for(int i = 0 ; i < t.length() ; i++) {
+            hm2.put(t.charAt(i), hm2.getOrDefault(t.charAt(i), 0)+1);
+        }
+        for(Character c : hm2.keySet()) {
+            if(hm1.containsKey(c)) {
+                if(hm1.get(c) != hm2.get(c)) {
+                    return c;
+                }
+            } else {
+                return c;
+            }
+        }
+        return 'c';
+    }
+}
