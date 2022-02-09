@@ -1,0 +1,20 @@
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        int count = 0;
+        Set<Set<Integer>> set = new HashSet<>();
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i : nums) {
+            hm.put(i, hm.getOrDefault(i, 0)+1);
+        }
+        for(int i : nums) {
+            int s = i - k;
+            if(hm.containsKey(s) && hm.get(s) > 0) {
+                if(k == 0 && hm.get(s) <= 1) continue;
+                count++;
+                hm.put(s, hm.get(s)-1);
+                set.add(new HashSet<>(Arrays.asList(i,s)));
+            } 
+        }
+        return set.size();
+    }
+}
