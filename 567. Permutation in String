@@ -1,0 +1,47 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if(s1.length() > s2.length()) return false;
+        HashMap<Character, Integer> hm1 = new HashMap<>();
+        for(int i = 0 ; i < s1.length() ; i++) {
+            hm1.put(s1.charAt(i), hm1.getOrDefault(s1.charAt(i), 0)+1);
+        }
+        int count = 0;
+        for(int i = 0 ; i < s1.length() ; i++) {
+            if(hm1.containsKey(s2.charAt(i))) {
+                count++;
+                hm1.put(s2.charAt(i), hm1.get(s2.charAt(i))-1);
+            }
+        }
+        boolean con = true;
+        if(count == s1.length()) {
+            for(Character c : hm1.keySet()) {
+                if(hm1.get(c) != 0) {
+                    con = false;
+                    break;
+                }
+            }
+            if(con) return true;
+        }
+        for(int i = s1.length() ; i < s2.length() ; i++) {
+            con = true;
+            if(hm1.containsKey(s2.charAt(i-s1.length()))) {
+                count--;
+                hm1.put(s2.charAt(i-s1.length()), hm1.get(s2.charAt(i-s1.length()))+1);
+            }
+            if(hm1.containsKey(s2.charAt(i))) {
+                count++;
+                hm1.put(s2.charAt(i), hm1.get(s2.charAt(i))-1);
+            }
+            if(count == s1.length()) {
+                for(Character c : hm1.keySet()) {
+                    if(hm1.get(c) != 0) {
+                        con = false;
+                        break;
+                    }
+                }
+                if(con)  return true;
+            }
+        }
+        return false;
+    }
+}
