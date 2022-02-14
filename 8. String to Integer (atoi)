@@ -1,0 +1,43 @@
+class Solution {
+    public int myAtoi(String s) {
+        String s1 = "";
+        boolean con = true;
+        for(int i = 0 ; i < s.length() ; i++) {
+            if(con && s.charAt(i) != ' ' && !Character.isDigit(s.charAt(i)) && s.charAt(i) != '+' && s.charAt(i) != '-') {
+                return 0;
+            }
+            if(!con && !Character.isDigit(s.charAt(i))) break;
+            if(con) {
+                if(s.charAt(i) == '+') {
+                    s1 += "+";
+                    con = false;
+                }
+                if(s.charAt(i) == '-') {
+                    s1 += "-";
+                    con = false;
+                }
+            }
+            if(Character.isDigit(s.charAt(i))) {
+                s1 += s.charAt(i);   
+                con = false;
+            }
+        }
+        con = false;
+        for(int i = 0 ; i < s1.length() ; i++) {
+            if(Character.isDigit(s1.charAt(i))) {
+                con = true;
+                break;
+            }
+        }
+        if(!con) return 0;
+        long l;
+        try{ l = Long.valueOf(s1);}
+        catch(Exception e) {
+            if(s1.charAt(0) == '-') return Integer.MIN_VALUE;
+            else return Integer.MAX_VALUE;
+        }
+        if(l < Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        if(l > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        return Integer.parseInt(s1);
+    }
+}
