@@ -1,0 +1,34 @@
+class Solution {
+    public String removeKdigits(String num, int k) {
+        Stack<Integer> stack = new Stack<>();
+        String res = "";
+        if(k == num.length()) return "0";
+        for(int i = 0 ; i < num.length() ; i++) {
+            if(!stack.isEmpty() && k != 0) {
+                while(Character.getNumericValue(num.charAt(i)) < stack.peek()) {
+                    stack.pop();
+                    k--;
+                    if(stack.isEmpty()) break;
+                    if(k == 0) break;
+                }
+            }
+            stack.push(Character.getNumericValue(num.charAt(i)));
+        }
+        //Removing remaining largest elements from the right of the stack
+        while(k != 0) {
+            stack.pop();
+            k--;
+        }
+        for(int i : stack) {
+            res += i;
+        }
+        String res2 = "";
+        int i = 0;
+        while(res.charAt(i) == '0') {
+            i++;
+            if(i == res.length()) return "0";
+        }
+        res2 = res.substring(i, res.length());
+        return res2;
+    }
+}
