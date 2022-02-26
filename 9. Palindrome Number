@@ -1,0 +1,12 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        int n = 0;
+        int x1 = Math.abs(x);
+        while(x1 > 0) {
+            int r = x1 % 10;
+            x1 /= 10;
+            n = (n*10) + r;
+        }
+        return n == x;
+    }
+}
