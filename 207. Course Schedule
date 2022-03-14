@@ -1,0 +1,39 @@
+class Solution {
+    int temp;
+    boolean con;
+    boolean dfsCumBfs(int node, List<List<Integer>> adj, boolean[] isVisited) {
+        //Since in the beginning the node is itself, we look for the second time convergence
+        if(con && temp == node) return false;
+        con = true;
+        for(int i = 0 ; i < adj.get(node).size() ; i++) {
+            if(!isVisited[adj.get(node).get(i)]) {
+                isVisited[adj.get(node).get(i)] = true;
+                if(!dfsCumBfs(adj.get(node).get(i), adj, isVisited)) {
+                    return false; 
+                }
+            }
+        }
+        return true;
+    }
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for(int i = 0 ; i < numCourses ; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for(int i = 0 ; i < prerequisites.length ; i++) {
+            adj.get(prerequisites[i][0]).add(prerequisites[i][1]);
+        }
+        for(int i = 0 ; i < numCourses ; i++) {
+            boolean[] isVisited = new boolean[numCourses];
+            if(adj.get(i).size() != 0) {
+                temp = i;
+                con = false;
+                //Check if the DFS will converge to the starting node
+                if(!dfsCumBfs(i, adj, isVisited)) {
+                    return false;
+                }        
+            }
+        }
+        return true;
+    }
+}
