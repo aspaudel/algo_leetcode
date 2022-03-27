@@ -1,0 +1,25 @@
+class Solution {
+    public int[] kWeakestRows(int[][] mat, int k) {
+        List<Integer> res = new ArrayList<>();
+        List<List<Integer>> arr = new ArrayList<>();
+        for(int i = 0 ; i <= 100 ; i++) {
+            arr.add(new ArrayList<>());
+        }
+        for(int i = 0 ; i < mat.length ; i++) {
+            int sum = 0;
+            for(int j = 0 ; j < mat[i].length ; j++) {
+                sum += mat[i][j];
+            }
+            arr.get(sum).add(i);
+        }
+        for(int i = 0 ; i < arr.size() ; i++) {
+            for(int j = 0 ; j < arr.get(i).size() ; j++) {
+                res.add(arr.get(i).get(j));
+                k--;
+                if(k == 0) break;
+            }
+            if(k == 0) break;
+        }
+        return res.stream().mapToInt(i -> i).toArray();
+    }
+}
