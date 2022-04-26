@@ -1,0 +1,52 @@
+class Solution {
+    public boolean isCyclic(int node, boolean[] isVisited, List<List<Integer>> adj) {
+        if(isVisited[node]) return true;
+        isVisited[node] = true;
+        for(int i = 0 ; i < adj.get(node).size() ; i++) {
+            if(isCyclic(adj.get(node).get(i), isVisited, adj)) return true;
+        } 
+        isVisited[node] = false;
+        return false;
+    }
+    public void dfs(int node, boolean[] isVisited, Stack<Integer> stack, List<List<Integer>> adj) {
+        isVisited[node] = true;
+        for(int i = 0 ; i < adj.get(node).size() ; i++) {
+            if(!isVisited[adj.get(node).get(i)]) {
+                dfs(adj.get(node).get(i), isVisited, stack, adj);
+            }
+        }
+        stack.push(node);
+    }
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for(int i = 0 ; i < numCourses ; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for(int i =  0 ; i < prerequisites.length ; i++) {
+            adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
+        }
+        boolean[] isVisited = new boolean[numCourses];
+        //check if the graph is cyclic
+        for(int i = 0 ; i < numCourses ; i++) {
+             isVisited[i] = true;
+            for(int j = 0 ; j < adj.get(i).size() ; j++) {
+                if(isCyclic(adj.get(i).get(j), isVisited, adj)) return new int[0];    
+            }
+            isVisited[i] = false;
+        }
+    
+        //Implement TopologicalSort
+        isVisited = new boolean[numCourses];
+        Stack<Integer> stack = new Stack<>();
+        for(int i = 0 ; i < numCourses ; i++) {
+            if(!isVisited[i]) dfs(i, isVisited, stack, adj);
+        }
+        int[] res = new int[numCourses];
+        int i = 0;
+        while(!stack.isEmpty()) {
+            res[i] = stack.pop();
+            i++;
+        }
+        return res;
+    }
+}
