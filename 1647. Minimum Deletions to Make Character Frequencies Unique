@@ -1,0 +1,32 @@
+class Solution {
+    public int minDeletions(String s) {
+        int deletion = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int i = 0 ; i < s.length() ; i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        Set<Integer> set = new HashSet<>();
+        Iterator<Map.Entry<Character, Integer>> itr = map.entrySet().iterator();
+        while(itr.hasNext()) {
+            Map.Entry<Character, Integer> keyy = itr.next();
+            char key = keyy.getKey();
+            if(set.contains(map.get(key))) {
+                while(true) {
+                    deletion++;
+                    map.put(key, map.get(key) - 1); 
+                    if(map.get(key) == 0) {
+                        itr.remove();    
+                        break;
+                    } 
+                    if(!set.contains(map.get(key))) {
+                        set.add(map.get(key));
+                        break;
+                    }
+                }
+            } else {
+                set.add(map.get(key));    
+            }                             
+        }
+        return deletion;
+    }
+}
