@@ -1,0 +1,31 @@
+class Solution {
+    int a = Integer.MAX_VALUE, b = Integer.MIN_VALUE;
+    public void binaryRecursion(int i, int j, int[] nums, int target) {
+        int s = i, e = j;
+        while(i <= j) {
+            int mid = (i+j)/2;
+            if(nums[mid] > target) {
+                j = mid - 1;
+            } else if(nums[mid] < target) {
+                i = mid + 1;
+            } else {
+                if(mid < a) a = mid;
+                if(mid > b) b = mid;
+                System.out.println(mid+" "+e);
+                if(mid == e) return;
+                binaryRecursion(mid+1, e, nums, target); 
+                if(mid == s) return;
+                binaryRecursion(s, mid, nums, target);
+                break;
+            }
+        }
+    }
+    public int[] searchRange(int[] nums, int target) {
+        int i = 0;
+        int j = nums.length-1;
+        binaryRecursion(i, j, nums, target);
+        if(a == Integer.MAX_VALUE) a = -1;
+        if(b == Integer.MIN_VALUE) b = -1;
+        return new int[]{a, b};
+    }
+} 
